@@ -1,0 +1,2398 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NASA Payment - Nền tảng tài chính số toàn diện</title>
+
+    <style>
+        :root {
+            --primary: #0052cc;
+            --primary-dark: #003b95;
+            --primary-soft: #eaf3ff;
+            --secondary: #0ea5e9;
+            --accent: #ff8a00;
+            --text: #0f172a;
+            --muted: #64748b;
+            --border: #dbeafe;
+            --bg: #ffffff;
+            --bg-soft: #f8fbff;
+            --card: #ffffff;
+            --shadow: 0 18px 45px rgba(0, 82, 204, 0.10);
+            --radius: 22px;
+        }
+
+        body.orange-theme {
+            --primary: #ff6b00;
+            --primary-dark: #d94f00;
+            --primary-soft: #fff3e8;
+            --secondary: #fb923c;
+            --accent: #0052cc;
+            --border: #fed7aa;
+            --bg-soft: #fffaf5;
+            --shadow: 0 18px 45px rgba(255, 107, 0, 0.12);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            color: var(--text);
+            background: var(--bg);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        .container {
+            width: min(1180px, calc(100% - 40px));
+            margin: 0 auto;
+        }
+
+        .section {
+            padding: 84px 0;
+        }
+
+        .section-soft {
+            background: var(--bg-soft);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 46px;
+        }
+
+        .section-title .eyebrow {
+            color: var(--primary);
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: 1.6px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .section-title h2 {
+            font-size: clamp(28px, 4vw, 40px);
+            color: var(--text);
+            line-height: 1.2;
+            margin-bottom: 12px;
+        }
+
+        .section-title p {
+            max-width: 700px;
+            margin: 0 auto;
+            color: var(--muted);
+            font-size: 16px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 13px 22px;
+            border-radius: 12px;
+            border: 1px solid transparent;
+            font-weight: 800;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.22s ease;
+            white-space: nowrap;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: #fff;
+            box-shadow: 0 12px 24px rgba(0, 82, 204, 0.18);
+        }
+
+        .orange-theme .btn-primary {
+            box-shadow: 0 12px 24px rgba(255, 107, 0, 0.18);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            background: var(--primary-dark);
+        }
+
+        .btn-outline {
+            background: #fff;
+            color: var(--primary);
+            border-color: var(--border);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--primary);
+            background: var(--primary-soft);
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 999px;
+            background: var(--primary-soft);
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 13px;
+        }
+
+        /* HEADER */
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid #eaf1fb;
+        }
+
+        .nav {
+            height: 76px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 900;
+            color: var(--primary);
+            letter-spacing: -0.4px;
+        }
+
+        .logo-mark {
+            width: 42px;
+            height: 42px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #fff;
+            display: grid;
+            place-items: center;
+            font-weight: 900;
+            box-shadow: var(--shadow);
+        }
+
+        .logo-text strong {
+            display: block;
+            font-size: 20px;
+            line-height: 1;
+        }
+
+        .logo-text span {
+            display: block;
+            font-size: 11px;
+            color: var(--muted);
+            letter-spacing: 1.5px;
+            margin-top: 3px;
+        }
+
+        .menu {
+            display: flex;
+            align-items: center;
+            gap: 26px;
+            color: #1e293b;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .menu a:hover {
+            color: var(--primary);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .theme-toggle {
+            border: 1px solid var(--border);
+            background: #fff;
+            color: var(--primary);
+            height: 42px;
+            padding: 0 14px;
+            border-radius: 12px;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        .mobile-toggle {
+            display: none;
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            background: #fff;
+            color: var(--primary);
+            font-size: 22px;
+            cursor: pointer;
+        }
+
+        /* HERO */
+        .hero {
+            position: relative;
+            overflow: hidden;
+            background:
+                radial-gradient(circle at 75% 15%, var(--primary-soft) 0, transparent 32%),
+                linear-gradient(135deg, #ffffff 0%, var(--bg-soft) 100%);
+            padding: 74px 0 64px;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            width: 420px;
+            height: 420px;
+            right: -160px;
+            top: -130px;
+            border-radius: 50%;
+            background: var(--primary-soft);
+            opacity: 0.85;
+        }
+
+        .hero-grid {
+            position: relative;
+            display: grid;
+            grid-template-columns: 1.02fr 0.98fr;
+            gap: 54px;
+            align-items: center;
+        }
+
+        .hero-content h1 {
+            font-size: clamp(42px, 6vw, 66px);
+            line-height: 1.08;
+            letter-spacing: -2px;
+            margin: 18px 0 18px;
+        }
+
+        .hero-content h1 span {
+            color: var(--primary);
+        }
+
+        .hero-content p {
+            color: var(--muted);
+            font-size: 17px;
+            max-width: 650px;
+            margin-bottom: 24px;
+        }
+
+        .hero-checks {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 24px 0 28px;
+        }
+
+        .check-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #334155;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .check-pill span {
+            width: 20px;
+            height: 20px;
+            border-radius: 999px;
+            display: grid;
+            place-items: center;
+            background: var(--primary);
+            color: #fff;
+            font-size: 12px;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .trust-line {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .trust-line strong {
+            color: var(--primary);
+        }
+
+        .hero-visual {
+            position: relative;
+            min-height: 470px;
+            display: grid;
+            place-items: center;
+        }
+
+        .device {
+            position: relative;
+            width: min(460px, 100%);
+            height: 360px;
+            border-radius: 34px;
+            background: linear-gradient(145deg, #fff, var(--primary-soft));
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            padding: 28px;
+            transform: rotate(-1deg);
+        }
+
+        .contract {
+            position: absolute;
+            left: 52px;
+            top: 48px;
+            width: 250px;
+            height: 285px;
+            border-radius: 22px;
+            background: #fff;
+            box-shadow: 0 18px 38px rgba(15, 23, 42, 0.12);
+            border: 1px solid #edf2f7;
+            padding: 24px;
+        }
+
+        .contract h3 {
+            color: var(--primary);
+            font-size: 16px;
+            margin-bottom: 18px;
+        }
+
+        .contract-line {
+            height: 10px;
+            border-radius: 999px;
+            background: #dbeafe;
+            margin-bottom: 12px;
+        }
+
+        .orange-theme .contract-line {
+            background: #fed7aa;
+        }
+
+        .contract-line:nth-child(4) {
+            width: 82%;
+        }
+
+        .contract-line:nth-child(5) {
+            width: 58%;
+        }
+
+        .signature {
+            margin-top: 34px;
+            color: var(--primary);
+            font-size: 30px;
+            font-family: cursive;
+        }
+
+        .shield {
+            position: absolute;
+            right: 34px;
+            bottom: 54px;
+            width: 116px;
+            height: 116px;
+            border-radius: 32px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #fff;
+            display: grid;
+            place-items: center;
+            font-size: 52px;
+            box-shadow: 0 18px 40px rgba(0, 82, 204, 0.22);
+        }
+
+        .phone {
+            position: absolute;
+            right: 46px;
+            top: 42px;
+            width: 120px;
+            height: 220px;
+            border-radius: 26px;
+            background: #0f172a;
+            padding: 10px;
+            box-shadow: 0 14px 35px rgba(15, 23, 42, 0.2);
+            transform: rotate(6deg);
+        }
+
+        .phone-screen {
+            height: 100%;
+            border-radius: 20px;
+            background: linear-gradient(180deg, var(--primary), var(--secondary));
+            padding: 16px 10px;
+            color: #fff;
+            font-size: 12px;
+        }
+
+        .float-contact {
+            position: fixed;
+            top: 36%;
+            right: 22px;
+            z-index: 40;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .float-contact a {
+            width: 58px;
+            height: 58px;
+            border-radius: 18px;
+            display: grid;
+            place-items: center;
+            background: #fff;
+            border: 1px solid var(--border);
+            color: var(--primary);
+            font-size: 22px;
+            box-shadow: var(--shadow);
+        }
+
+        /* SERVICE */
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px;
+        }
+
+        .service-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 28px 20px;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(15, 23, 42, 0.035);
+            transition: 0.22s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow);
+        }
+
+        .service-icon {
+            width: 66px;
+            height: 66px;
+            margin: 0 auto 18px;
+            border-radius: 20px;
+            display: grid;
+            place-items: center;
+            color: #fff;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            font-size: 30px;
+        }
+
+        .service-card h3 {
+            color: var(--primary);
+            font-size: 18px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .service-card p {
+            color: var(--muted);
+            font-size: 14px;
+            min-height: 88px;
+        }
+
+        .service-card .small-link {
+            margin-top: 18px;
+            display: inline-block;
+            color: var(--primary);
+            font-weight: 800;
+            font-size: 13px;
+        }
+
+        /* CORE */
+        .core-grid {
+            display: grid;
+            grid-template-columns: 0.88fr 1.12fr;
+            gap: 54px;
+            align-items: center;
+        }
+
+        .core-illustration {
+            min-height: 340px;
+            border-radius: 34px;
+            background:
+                radial-gradient(circle at 50% 50%, var(--primary-soft), transparent 65%),
+                #fff;
+            border: 1px solid var(--border);
+            display: grid;
+            place-items: center;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .core-lock {
+            width: 170px;
+            height: 170px;
+            border-radius: 46px;
+            display: grid;
+            place-items: center;
+            color: #fff;
+            font-size: 76px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            box-shadow: var(--shadow);
+        }
+
+        .core-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 22px;
+            margin-top: 28px;
+        }
+
+        .core-item {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 22px;
+        }
+
+        .core-item h3 {
+            color: var(--primary);
+            margin-bottom: 8px;
+            font-size: 17px;
+        }
+
+        .core-item p {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        /* ABOUT */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1.05fr 0.95fr;
+            gap: 48px;
+            align-items: center;
+        }
+
+        .about-content h2 {
+            font-size: clamp(30px, 4vw, 44px);
+            line-height: 1.16;
+            margin-bottom: 18px;
+        }
+
+        .about-content h2 span {
+            color: var(--primary);
+        }
+
+        .about-content p {
+            color: var(--muted);
+            margin-bottom: 18px;
+        }
+
+        .about-list {
+            display: grid;
+            gap: 10px;
+            margin: 20px 0 28px;
+        }
+
+        .about-list li {
+            list-style: none;
+            color: #334155;
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+        }
+
+        .about-list li::before {
+            content: "✓";
+            color: #fff;
+            background: var(--primary);
+            width: 20px;
+            height: 20px;
+            border-radius: 999px;
+            display: inline-grid;
+            place-items: center;
+            font-size: 12px;
+            flex: 0 0 auto;
+            margin-top: 3px;
+        }
+
+        .stats-box {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 32px;
+            padding: 28px;
+            box-shadow: var(--shadow);
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+        }
+
+        .stat-item {
+            background: var(--primary-soft);
+            border-radius: 20px;
+            padding: 24px;
+        }
+
+        .stat-item strong {
+            display: block;
+            font-size: 32px;
+            color: var(--primary);
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+
+        .stat-item span {
+            color: #334155;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        /* ORG + TEAM */
+        .split-grid {
+            display: grid;
+            grid-template-columns: 0.92fr 1.08fr;
+            gap: 34px;
+            align-items: stretch;
+        }
+
+        .org-card,
+        .team-panel {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 28px;
+            padding: 28px;
+            box-shadow: var(--shadow);
+        }
+
+        .org-tree {
+            margin-top: 20px;
+            display: grid;
+            gap: 14px;
+        }
+
+        .org-node {
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 14px;
+            background: var(--primary-soft);
+            text-align: center;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .org-children {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .org-child {
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 14px;
+            background: #fff;
+            font-size: 14px;
+        }
+
+        .org-child strong {
+            display: block;
+            color: var(--text);
+            margin-bottom: 5px;
+        }
+
+        .org-child span {
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-top: 20px;
+        }
+
+        .person-card {
+            display: flex;
+            gap: 14px;
+            align-items: center;
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 14px;
+            background: #fff;
+        }
+
+        .avatar {
+            width: 62px;
+            height: 62px;
+            border-radius: 20px;
+            display: grid;
+            place-items: center;
+            font-size: 28px;
+            background: var(--primary-soft);
+            color: var(--primary);
+            flex: 0 0 auto;
+        }
+
+        .person-card h3 {
+            font-size: 15px;
+            margin-bottom: 3px;
+        }
+
+        .person-card p {
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.45;
+        }
+
+        .person-icons {
+            margin-top: 6px;
+            color: var(--primary);
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        /* PROJECT */
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 22px;
+        }
+
+        .project-card {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 22px;
+            overflow: hidden;
+            box-shadow: 0 8px 24px rgba(15, 23, 42, 0.045);
+            transition: 0.22s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-7px);
+            box-shadow: var(--shadow);
+        }
+
+        .project-img {
+            height: 150px;
+            position: relative;
+            background:
+                linear-gradient(135deg, rgba(0, 82, 204, .18), rgba(14, 165, 233, .34)),
+                linear-gradient(45deg, #e2e8f0, #f8fafc);
+            overflow: hidden;
+        }
+
+        .orange-theme .project-img {
+            background:
+                linear-gradient(135deg, rgba(255, 107, 0, .20), rgba(251, 146, 60, .34)),
+                linear-gradient(45deg, #fff7ed, #f8fafc);
+        }
+
+        .project-img::before,
+        .project-img::after {
+            content: "";
+            position: absolute;
+            background: rgba(255, 255, 255, .76);
+            border-radius: 10px;
+            transform: rotate(-8deg);
+        }
+
+        .project-img::before {
+            width: 80px;
+            height: 120px;
+            left: 30px;
+            bottom: -20px;
+        }
+
+        .project-img::after {
+            width: 120px;
+            height: 150px;
+            right: 22px;
+            bottom: -34px;
+        }
+
+        .project-tag {
+            position: absolute;
+            left: 14px;
+            top: 14px;
+            background: var(--primary);
+            color: #fff;
+            font-size: 12px;
+            font-weight: 900;
+            padding: 5px 10px;
+            border-radius: 999px;
+            z-index: 2;
+        }
+
+        .project-body {
+            padding: 20px;
+        }
+
+        .project-body h3 {
+            font-size: 17px;
+            margin-bottom: 6px;
+        }
+
+        .project-body p {
+            color: var(--muted);
+            font-size: 14px;
+            margin-bottom: 14px;
+        }
+
+        .project-meta {
+            display: grid;
+            gap: 6px;
+            color: #334155;
+            font-size: 13px;
+            margin-bottom: 16px;
+        }
+
+        .mini-btn {
+            display: inline-flex;
+            padding: 8px 12px;
+            border-radius: 999px;
+            border: 1px solid var(--border);
+            color: var(--primary);
+            font-size: 12px;
+            font-weight: 900;
+        }
+
+        /* PROCESS */
+        .process-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 14px;
+        }
+
+        .step {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 22px 14px;
+            text-align: center;
+            position: relative;
+        }
+
+        .step-num {
+            width: 38px;
+            height: 38px;
+            margin: 0 auto 12px;
+            border-radius: 999px;
+            display: grid;
+            place-items: center;
+            background: var(--primary);
+            color: #fff;
+            font-weight: 900;
+        }
+
+        .step h3 {
+            font-size: 14px;
+            color: var(--text);
+            margin-bottom: 6px;
+        }
+
+        .step p {
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        /* PARTNERS */
+        .partner-row {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 16px;
+        }
+
+        .partner {
+            height: 72px;
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            background: #fff;
+            display: grid;
+            place-items: center;
+            color: #334155;
+            font-weight: 900;
+            box-shadow: 0 6px 16px rgba(15, 23, 42, .035);
+        }
+
+        .partner span {
+            color: var(--primary);
+        }
+
+        /* CONTACT */
+        .contact {
+            color: #fff;
+            background:
+                radial-gradient(circle at 70% 20%, rgba(255, 255, 255, .22), transparent 32%),
+                linear-gradient(135deg, var(--primary-dark), var(--primary));
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 0.9fr 1.2fr 0.9fr;
+            gap: 30px;
+            align-items: start;
+        }
+
+        .contact h2,
+        .contact h3 {
+            color: #fff;
+            margin-bottom: 14px;
+        }
+
+        .contact p,
+        .contact li {
+            color: rgba(255, 255, 255, .86);
+            font-size: 14px;
+        }
+
+        .contact-info {
+            display: grid;
+            gap: 10px;
+            margin-top: 18px;
+        }
+
+        .lead-form {
+            background: #fff;
+            border-radius: 26px;
+            padding: 28px;
+            box-shadow: 0 20px 50px rgba(15, 23, 42, .18);
+            color: var(--text);
+        }
+
+        .lead-form h2 {
+            color: var(--primary);
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .lead-form>p {
+            color: var(--muted);
+            text-align: center;
+            margin-bottom: 22px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .lead-form input,
+        .lead-form select,
+        .lead-form textarea {
+            width: 100%;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 13px 14px;
+            margin-bottom: 12px;
+            outline: none;
+            font-family: inherit;
+            font-size: 14px;
+            color: var(--text);
+        }
+
+        .lead-form textarea {
+            min-height: 86px;
+            resize: vertical;
+        }
+
+        .lead-form input:focus,
+        .lead-form select:focus,
+        .lead-form textarea:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px var(--primary-soft);
+        }
+
+        .lead-form button {
+            width: 100%;
+            border: 0;
+        }
+
+        .why-list {
+            display: grid;
+            gap: 10px;
+            margin-top: 16px;
+        }
+
+        .why-list li {
+            list-style: none;
+        }
+
+        /* FOOTER */
+        .footer {
+            background: #07111f;
+            color: rgba(255, 255, 255, .76);
+            padding: 22px 0;
+            font-size: 13px;
+        }
+
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .footer a {
+            margin-left: 18px;
+        }
+
+
+
+        /* SALES + RESPONSIVE BOOST */
+        .sales-strip {
+            background: var(--primary);
+            color: #fff;
+            padding: 10px 0;
+            font-size: 13px;
+        }
+
+        .sales-strip-inner {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 14px;
+            flex-wrap: wrap;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        .sales-strip strong {
+            color: #fff;
+        }
+
+        .sales-strip a {
+            background: rgba(255, 255, 255, .16);
+            border: 1px solid rgba(255, 255, 255, .28);
+            color: #fff;
+            padding: 6px 12px;
+            border-radius: 999px;
+            font-weight: 900;
+        }
+
+        .hero-sales-box {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin: 26px 0;
+            max-width: 680px;
+        }
+
+        .hero-sales-item {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 14px;
+            box-shadow: 0 8px 22px rgba(15, 23, 42, .05);
+        }
+
+        .hero-sales-item strong {
+            display: block;
+            color: var(--primary);
+            font-size: 18px;
+            line-height: 1;
+            margin-bottom: 6px;
+        }
+
+        .hero-sales-item span {
+            color: var(--muted);
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .sales-conversion {
+            background: linear-gradient(135deg, var(--primary-soft), #fff);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .sales-grid {
+            display: grid;
+            grid-template-columns: 0.95fr 1.05fr;
+            gap: 34px;
+            align-items: center;
+        }
+
+        .sales-copy h2 {
+            font-size: clamp(30px, 4vw, 44px);
+            line-height: 1.16;
+            margin: 14px 0;
+        }
+
+        .sales-copy h2 span {
+            color: var(--primary);
+        }
+
+        .sales-copy p {
+            color: var(--muted);
+            margin-bottom: 20px;
+        }
+
+        .sales-points {
+            display: grid;
+            gap: 12px;
+            margin: 22px 0;
+        }
+
+        .sales-point {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 14px;
+        }
+
+        .sales-point-icon {
+            width: 34px;
+            height: 34px;
+            border-radius: 12px;
+            background: var(--primary);
+            color: #fff;
+            display: grid;
+            place-items: center;
+            flex: 0 0 auto;
+            font-weight: 900;
+        }
+
+        .sales-point strong {
+            display: block;
+            color: var(--text);
+            margin-bottom: 2px;
+        }
+
+        .sales-point span {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .sales-mini-form {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 28px;
+            padding: 26px;
+            box-shadow: var(--shadow);
+        }
+
+        .sales-mini-form h3 {
+            font-size: 24px;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .sales-mini-form p {
+            color: var(--muted);
+            margin-bottom: 18px;
+            font-size: 14px;
+        }
+
+        .sales-mini-form input,
+        .sales-mini-form select {
+            width: 100%;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 13px 14px;
+            margin-bottom: 12px;
+            outline: none;
+            font-family: inherit;
+            font-size: 14px;
+        }
+
+        .sales-mini-form input:focus,
+        .sales-mini-form select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px var(--primary-soft);
+        }
+
+        .sticky-mobile-cta {
+            display: none;
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 80;
+            background: rgba(255, 255, 255, .94);
+            backdrop-filter: blur(14px);
+            border-top: 1px solid var(--border);
+            padding: 10px 14px;
+            gap: 10px;
+        }
+
+        .sticky-mobile-cta a {
+            flex: 1;
+            min-height: 46px;
+            border-radius: 12px;
+            font-size: 13px;
+        }
+
+        .sticky-mobile-cta .call-btn {
+            background: #fff;
+            color: var(--primary);
+            border: 1px solid var(--border);
+            box-shadow: none;
+        }
+
+        @media (max-width: 900px) {
+            body {
+                padding-bottom: 72px;
+            }
+
+            .sticky-mobile-cta {
+                display: flex;
+            }
+
+            .sales-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-sales-box {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .hero {
+                padding: 54px 0 44px;
+            }
+
+            .nav {
+                height: 68px;
+            }
+
+            .menu {
+                top: 68px;
+            }
+        }
+
+        @media (max-width: 680px) {
+            .sales-strip {
+                font-size: 12px;
+                padding: 8px 0;
+            }
+
+            .hero-sales-box {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-sales-item {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .hero-sales-item strong {
+                margin-bottom: 0;
+                font-size: 20px;
+            }
+
+            .service-card p {
+                min-height: unset;
+            }
+
+            .contact-grid {
+                gap: 22px;
+            }
+
+            .lead-form {
+                padding: 22px 18px;
+            }
+
+            .sales-mini-form {
+                padding: 22px 18px;
+            }
+
+            .float-contact {
+                display: none !important;
+            }
+        }
+
+        @media (max-width: 430px) {
+            .container {
+                width: min(100% - 22px, 1180px);
+            }
+
+            .logo-text strong {
+                font-size: 17px;
+            }
+
+            .logo-mark {
+                width: 38px;
+                height: 38px;
+            }
+
+            .theme-toggle {
+                padding: 0 10px;
+                font-size: 12px;
+            }
+
+            .mobile-toggle {
+                width: 38px;
+                height: 38px;
+            }
+
+            .section-title h2,
+            .about-content h2,
+            .sales-copy h2 {
+                font-size: 28px;
+            }
+
+            .hero-content h1 {
+                font-size: 38px;
+            }
+        }
+
+
+        /* SCROLL ANIMATION */
+        .reveal {
+            opacity: 0;
+            transform: translateY(34px);
+            transition:
+                opacity 0.75s ease,
+                transform 0.75s ease;
+            will-change: opacity, transform;
+        }
+
+        .reveal.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-42px);
+            transition:
+                opacity 0.8s ease,
+                transform 0.8s ease;
+            will-change: opacity, transform;
+        }
+
+        .reveal-right {
+            opacity: 0;
+            transform: translateX(42px);
+            transition:
+                opacity 0.8s ease,
+                transform 0.8s ease;
+            will-change: opacity, transform;
+        }
+
+        .reveal-left.is-visible,
+        .reveal-right.is-visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .zoom-reveal {
+            opacity: 0;
+            transform: scale(0.94);
+            transition:
+                opacity 0.75s ease,
+                transform 0.75s ease;
+            will-change: opacity, transform;
+        }
+
+        .zoom-reveal.is-visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .stagger>* {
+            opacity: 0;
+            transform: translateY(28px);
+            transition:
+                opacity 0.7s ease,
+                transform 0.7s ease;
+            transition-delay: calc(var(--i, 0) * 90ms);
+            will-change: opacity, transform;
+        }
+
+        .stagger.is-visible>* {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .hero-content {
+            animation: heroTextIn 0.9s ease both;
+        }
+
+        .hero-visual {
+            animation: heroVisualIn 1s 0.12s ease both;
+        }
+
+        @keyframes heroTextIn {
+            from {
+                opacity: 0;
+                transform: translateY(24px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes heroVisualIn {
+            from {
+                opacity: 0;
+                transform: translateY(34px) scale(0.96);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .device {
+            transition: transform 0.25s ease-out;
+        }
+
+        .phone {
+            animation: floatPhone 4.5s ease-in-out infinite;
+        }
+
+        .shield {
+            animation: pulseShield 2.8s ease-in-out infinite;
+        }
+
+        @keyframes floatPhone {
+
+            0%,
+            100% {
+                transform: rotate(6deg) translateY(0);
+            }
+
+            50% {
+                transform: rotate(6deg) translateY(-12px);
+            }
+        }
+
+        @keyframes pulseShield {
+
+            0%,
+            100% {
+                transform: scale(1);
+                box-shadow: 0 18px 40px rgba(0, 82, 204, 0.22);
+            }
+
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 22px 52px rgba(0, 82, 204, 0.32);
+            }
+        }
+
+        .orange-theme .shield {
+            animation-name: pulseShieldOrange;
+        }
+
+        @keyframes pulseShieldOrange {
+
+            0%,
+            100% {
+                transform: scale(1);
+                box-shadow: 0 18px 40px rgba(255, 107, 0, 0.22);
+            }
+
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 22px 52px rgba(255, 107, 0, 0.32);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.001ms !important;
+                animation-iteration-count: 1 !important;
+                scroll-behavior: auto !important;
+                transition-duration: 0.001ms !important;
+            }
+
+            .reveal,
+            .reveal-left,
+            .reveal-right,
+            .zoom-reveal,
+            .stagger>* {
+                opacity: 1 !important;
+                transform: none !important;
+            }
+        }
+
+
+        /* RESPONSIVE */
+        @media (max-width: 1080px) {
+            .service-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .project-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .process-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .partner-row {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .contact-grid,
+            .split-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .mobile-toggle {
+                display: grid;
+                place-items: center;
+            }
+
+            .menu {
+                position: absolute;
+                top: 76px;
+                left: 0;
+                right: 0;
+                background: #fff;
+                border-bottom: 1px solid var(--border);
+                padding: 20px;
+                display: none;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .menu.active {
+                display: flex;
+            }
+
+            .nav-actions .btn {
+                display: none;
+            }
+
+            .hero-grid,
+            .core-grid,
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-visual {
+                min-height: 390px;
+            }
+
+            .device {
+                height: 330px;
+            }
+
+            .float-contact {
+                display: none;
+            }
+        }
+
+        @media (max-width: 680px) {
+            .container {
+                width: min(100% - 28px, 1180px);
+            }
+
+            .section {
+                padding: 62px 0;
+            }
+
+            .service-grid,
+            .core-list,
+            .stats-box,
+            .team-grid,
+            .project-grid,
+            .process-grid,
+            .partner-row,
+            .form-row,
+            .org-children {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-content h1 {
+                letter-spacing: -1px;
+            }
+
+            .hero-actions {
+                flex-direction: column;
+            }
+
+            .hero-actions .btn {
+                width: 100%;
+            }
+
+            .hero-visual {
+                min-height: 320px;
+            }
+
+            .device {
+                height: 285px;
+                padding: 18px;
+            }
+
+            .contract {
+                width: 205px;
+                height: 235px;
+                left: 28px;
+                top: 30px;
+            }
+
+            .phone {
+                width: 90px;
+                height: 170px;
+                right: 24px;
+            }
+
+            .shield {
+                width: 80px;
+                height: 80px;
+                font-size: 34px;
+                right: 22px;
+                bottom: 38px;
+            }
+
+            .footer-inner {
+                flex-direction: column;
+            }
+
+            .footer a {
+                margin-left: 0;
+                margin-right: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="container nav">
+            <a class="logo" href="#home" aria-label="NASA Payment">
+                <div class="logo-mark">N</div>
+                <div class="logo-text">
+                    <strong>NASA</strong>
+                    <span>PAYMENT</span>
+                </div>
+            </a>
+
+            <nav class="menu" id="menu">
+                <a href="#home">Trang chủ</a>
+                <a href="#about">Về chúng tôi</a>
+                <a href="#services">Dịch vụ</a>
+                <a href="#technology">Công nghệ</a>
+                <a href="#team">Tư vấn viên</a>
+                <a href="#projects">Dự án</a>
+                <a href="#contact">Liên hệ</a>
+            </nav>
+
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle" type="button">Cam / Xanh</button>
+                <a class="btn btn-primary" href="#contact">Đăng ký tư vấn</a>
+                <button class="mobile-toggle" id="mobileToggle" type="button">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="sales-strip">
+        <div class="container sales-strip-inner">
+            <span><strong>Ưu đãi tư vấn miễn phí:</strong> Kiểm tra hồ sơ vay / đầu tư / hợp đồng điện tử trong
+                24h</span>
+            <a href="#contact">Nhận tư vấn ngay</a>
+        </div>
+    </div>
+
+    <main>
+        <section class="hero" id="home">
+            <div class="container hero-grid">
+                <div class="hero-content">
+                    <div class="badge">Nền tảng tài chính số toàn diện</div>
+                    <h1>Kết nối giá trị – <span>Kiến tạo tương lai</span></h1>
+                    <p>
+                        NASA Payment cung cấp giải pháp kết nối vay vốn, đầu tư, bất động sản,
+                        cổ phần và tư vấn tài chính thông qua hợp đồng điện tử, chữ ký số và quy trình
+                        xác thực minh bạch. Hệ thống hoạt động đồng bộ trên cả nền tảng <strong>Web</strong> và <strong>Mobile App</strong>.
+                    </p>
+
+                    <div class="hero-checks">
+                        <div class="check-pill"><span>✓</span> Đa nền tảng Web & App</div>
+                        <div class="check-pill"><span>✓</span> Hợp đồng điện tử</div>
+                        <div class="check-pill"><span>✓</span> Chữ ký số hợp pháp</div>
+                        <div class="check-pill"><span>✓</span> Bảo mật dữ liệu</div>
+                    </div>
+
+                    <div class="hero-sales-box">
+                        <div class="hero-sales-item">
+                            <strong>24h</strong>
+                            <span>Phản hồi tư vấn</span>
+                        </div>
+                        <div class="hero-sales-item">
+                            <strong>0đ</strong>
+                            <span>Tư vấn ban đầu</span>
+                        </div>
+                        <div class="hero-sales-item">
+                            <strong>100%</strong>
+                            <span>Quy trình số hóa</span>
+                        </div>
+                    </div>
+
+                    <div class="hero-actions">
+                        <a class="btn btn-primary" href="#contact">Đăng ký tư vấn ngay</a>
+                        <a class="btn btn-outline" href="#">Truy cập Web</a>
+                        <a class="btn btn-outline" href="#" style="border: 1px dashed var(--primary);">Tải App (iOS/Android)</a>
+                    </div>
+
+                    <p class="trust-line">Được tin tưởng bởi hơn <strong>10.000+ khách hàng</strong> và nhiều đối tác
+                        tài chính.</p>
+                </div>
+
+                <div class="hero-visual" aria-label="Minh họa hợp đồng điện tử">
+                    <div class="device">
+                        <div class="contract">
+                            <h3>HỢP ĐỒNG ĐIỆN TỬ</h3>
+                            <div class="contract-line"></div>
+                            <div class="contract-line"></div>
+                            <div class="contract-line"></div>
+                            <div class="contract-line"></div>
+                            <div class="signature">NASA</div>
+                        </div>
+                        <div class="phone">
+                            <div class="phone-screen">
+                                <strong>Ký số</strong>
+                                <div
+                                    style="height:8px;background:rgba(255,255,255,.55);border-radius:8px;margin-top:18px;">
+                                </div>
+                                <div
+                                    style="height:8px;background:rgba(255,255,255,.38);border-radius:8px;margin-top:10px;width:70%;">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="shield">✓</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="float-contact" aria-label="Liên hệ nhanh">
+            <a href="tel:19001234" title="Hotline">☎</a>
+            <a href="#contact" title="Zalo">Z</a>
+            <a href="#contact" title="Messenger">💬</a>
+        </div>
+
+        <section class="section" id="services">
+            <div class="container">
+                <div class="section-title reveal">
+                    <div class="eyebrow">Hệ sinh thái dịch vụ</div>
+                    <h2>Giải pháp tài chính toàn diện cho cá nhân và doanh nghiệp</h2>
+                    <p>
+                        Tập trung vào 5 nhóm dịch vụ lõi: vay vốn, đầu tư, bất động sản,
+                        cổ phần và tư vấn chuyên sâu.
+                    </p>
+                </div>
+
+                <div class="service-grid stagger">
+                    <article class="service-card">
+                        <div class="service-icon">💳</div>
+                        <h3>Vay vốn</h3>
+                        <p>Kết nối người vay với nguồn vốn đa dạng, giảm thủ tục truyền thống, hỗ trợ hồ sơ nhanh chóng.
+                        </p>
+                        <a class="small-link" href="#contact">Tư vấn vay vốn →</a>
+                    </article>
+
+                    <article class="service-card">
+                        <div class="service-icon">📈</div>
+                        <h3>Đầu tư</h3>
+                        <p>Gợi ý cơ hội đầu tư minh bạch, quản lý danh mục, theo dõi lợi nhuận và rủi ro.</p>
+                        <a class="small-link" href="#contact">Tìm cơ hội đầu tư →</a>
+                    </article>
+
+                    <article class="service-card">
+                        <div class="service-icon">🏢</div>
+                        <h3>Bất động sản</h3>
+                        <p>Hỗ trợ giao dịch, góp vốn, đầu tư dự án BĐS với hợp đồng điện tử và hồ sơ rõ ràng.</p>
+                        <a class="small-link" href="#projects">Xem dự án BĐS →</a>
+                    </article>
+
+                    <article class="service-card">
+                        <div class="service-icon">🤝</div>
+                        <h3>Cổ phần</h3>
+                        <p>Kết nối doanh nghiệp gọi vốn với nhà đầu tư, quản lý cổ đông và hợp đồng góp vốn.</p>
+                        <a class="small-link" href="#contact">Tư vấn gọi vốn →</a>
+                    </article>
+
+                    <article class="service-card">
+                        <div class="service-icon">👥</div>
+                        <h3>Tư vấn</h3>
+                        <p>Đội ngũ chuyên gia tư vấn tài chính, pháp lý, vay vốn, đầu tư và hợp đồng số.</p>
+                        <a class="small-link" href="#team">Gặp tư vấn viên →</a>
+                    </article>
+                </div>
+                <div style="text-align: center; margin-top: 42px;" class="reveal">
+                    <a class="btn btn-primary" href="#contact">Đăng ký tư vấn dịch vụ</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="section section-soft" id="technology">
+            <div class="container core-grid">
+                <div class="core-illustration reveal-left">
+                    <div class="core-lock">🔐</div>
+                </div>
+
+                <div class="reveal-right">
+                    <div class="badge">Công nghệ nền tảng</div>
+                    <h2 style="font-size: clamp(30px, 4vw, 44px); line-height: 1.16; margin: 18px 0 14px;">
+                        An toàn – Bảo mật – Hợp pháp
+                    </h2>
+                    <p style="color: var(--muted);">
+                        NASA Payment lấy hợp đồng điện tử và chữ ký số làm lõi pháp lý,
+                        giúp mọi giao dịch tài chính được số hóa, xác thực và lưu trữ minh bạch.
+                    </p>
+
+                    <div class="core-list">
+                        <div class="core-item">
+                            <h3>Hợp đồng điện tử</h3>
+                            <p>Tạo lập, ký kết và lưu trữ hợp đồng có giá trị pháp lý cao.</p>
+                        </div>
+
+                        <div class="core-item">
+                            <h3>Chữ ký số</h3>
+                            <p>Xác thực danh tính, ký số an toàn theo quy định pháp luật.</p>
+                        </div>
+
+                        <div class="core-item">
+                            <h3>Lưu trữ bảo mật</h3>
+                            <p>Dữ liệu được mã hóa, phân quyền và lưu trữ an toàn trên hệ thống.</p>
+                        </div>
+
+                        <div class="core-item">
+                            <h3>Tuân thủ pháp lý</h3>
+                            <p>Hỗ trợ giao dịch điện tử, hợp đồng số và quy trình kiểm soát rủi ro.</p>
+                        </div>
+                    </div>
+                    <div style="margin-top: 32px;">
+                        <a class="btn btn-primary" href="#contact">Tìm hiểu giải pháp hợp đồng số</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="about">
+            <div class="container about-grid">
+                <div class="about-content reveal-left">
+                    <div class="badge">Về NASA Payment</div>
+                    <h2>Tài chính số – <span>Minh bạch</span> – Tin cậy</h2>
+                    <p>
+                        NASA Payment định hướng trở thành nền tảng kết nối tài chính số,
+                        giúp người vay, người cho vay, nhà đầu tư và doanh nghiệp làm việc
+                        trên một quy trình rõ ràng, nhanh chóng và có kiểm soát.
+                    </p>
+
+                    <ul class="about-list">
+                        <li>Giảm phụ thuộc vào quy trình giấy tờ truyền thống.</li>
+                        <li>Tăng tính pháp lý bằng hợp đồng điện tử và chữ ký số.</li>
+                        <li>Hỗ trợ đa mô hình: vay, đầu tư, bất động sản, cổ phần, tư vấn.</li>
+                        <li>Đồng hành cùng khách hàng bởi đội ngũ tư vấn viên chuyên môn.</li>
+                    </ul>
+
+                    <a class="btn btn-primary" href="#contact">Nhận tư vấn miễn phí</a>
+                </div>
+
+                <div class="stats-box stagger">
+                    <div class="stat-item">
+                        <strong>10.000+</strong>
+                        <span>Khách hàng quan tâm</span>
+                    </div>
+                    <div class="stat-item">
+                        <strong>100.000+</strong>
+                        <span>Hợp đồng điện tử</span>
+                    </div>
+                    <div class="stat-item">
+                        <strong>500+</strong>
+                        <span>Đối tác tiềm năng</span>
+                    </div>
+                    <div class="stat-item">
+                        <strong>98%</strong>
+                        <span>Mức độ hài lòng</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section section-soft" id="team">
+            <div class="container">
+                <div class="section-title reveal">
+                    <div class="eyebrow">Bộ máy & tư vấn viên</div>
+                    <h2>Cơ cấu rõ ràng, đội ngũ đồng hành chuyên sâu</h2>
+                    <p>
+                        Landing Page nên thể hiện cả bộ máy công ty và đội ngũ tư vấn viên
+                        để tăng niềm tin trước khi khách hàng để lại thông tin.
+                    </p>
+                </div>
+
+                <div class="split-grid">
+                    <div class="org-card reveal-left">
+                        <h3>Cơ cấu tổ chức</h3>
+                        <p style="color: var(--muted); margin-top: 6px;">
+                            Mô hình đề xuất cho nền tảng tài chính số.
+                        </p>
+
+                        <div class="org-tree">
+                            <div class="org-node">BAN ĐIỀU HÀNH</div>
+
+                            <div class="org-children">
+                                <div class="org-child">
+                                    <strong>Khối kinh doanh</strong>
+                                    <span>Tư vấn vay vốn, chăm sóc khách hàng</span>
+                                </div>
+                                <div class="org-child">
+                                    <strong>Khối thẩm định</strong>
+                                    <span>Đánh giá hồ sơ, quản lý rủi ro</span>
+                                </div>
+                                <div class="org-child">
+                                    <strong>Khối công nghệ</strong>
+                                    <span>Phát triển hệ thống, bảo mật dữ liệu</span>
+                                </div>
+                                <div class="org-child">
+                                    <strong>Khối pháp lý</strong>
+                                    <span>Hợp đồng điện tử, tuân thủ & kiểm soát</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="team-panel reveal-right">
+                        <h3>Đội ngũ tư vấn viên</h3>
+                        <p style="color: var(--muted); margin-top: 6px;">
+                            Có thể thay ảnh, tên và kinh nghiệm bằng dữ liệu thật của doanh nghiệp.
+                        </p>
+
+                        <div class="team-grid stagger">
+                            <div class="person-card">
+                                <div class="avatar">👨‍💼</div>
+                                <div>
+                                    <h3>Nguyễn Văn An</h3>
+                                    <p>Chuyên gia tài chính<br>10+ năm kinh nghiệm</p>
+                                    <div class="person-icons">☎ Zalo LinkedIn</div>
+                                </div>
+                            </div>
+
+                            <div class="person-card">
+                                <div class="avatar">👩‍💼</div>
+                                <div>
+                                    <h3>Trần Thị Bảo Ngọc</h3>
+                                    <p>Chuyên viên tư vấn vay<br>500+ hồ sơ thành công</p>
+                                    <div class="person-icons">☎ Zalo LinkedIn</div>
+                                </div>
+                            </div>
+
+                            <div class="person-card">
+                                <div class="avatar">👨‍⚖️</div>
+                                <div>
+                                    <h3>Lê Minh Tuấn</h3>
+                                    <p>Chuyên gia pháp lý<br>HĐĐT & chữ ký số</p>
+                                    <div class="person-icons">☎ Zalo LinkedIn</div>
+                                </div>
+                            </div>
+
+                            <div class="person-card">
+                                <div class="avatar">👩‍💻</div>
+                                <div>
+                                    <h3>Phạm Hoàng Vy</h3>
+                                    <p>Chuyên gia đầu tư<br>BĐS & cổ phần</p>
+                                    <div class="person-icons">☎ Zalo LinkedIn</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="margin-top: 24px; text-align: center;">
+                            <a class="btn btn-outline" style="width: 100%" href="#contact">Đặt lịch tư vấn với chuyên gia</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <section class="section sales-conversion" id="sales">
+            <div class="container sales-grid">
+                <div class="sales-copy reveal-left">
+                    <div class="badge">Tập trung chuyển đổi khách hàng</div>
+                    <h2>Biến người truy cập thành <span>khách hàng tiềm năng</span></h2>
+                    <p>
+                        Landing Page được thiết kế theo hướng sales: khách truy cập hiểu nhanh lợi ích,
+                        chọn đúng nhu cầu và để lại thông tin tư vấn ngay trong một lần cuộn.
+                    </p>
+
+                    <div class="sales-points">
+                        <div class="sales-point">
+                            <div class="sales-point-icon">1</div>
+                            <div>
+                                <strong>CTA rõ ràng</strong>
+                                <span>Đăng ký tư vấn, gọi hotline, nhắn Zalo luôn xuất hiện đúng thời điểm.</span>
+                            </div>
+                        </div>
+
+                        <div class="sales-point">
+                            <div class="sales-point-icon">2</div>
+                            <div>
+                                <strong>Phân loại nhu cầu</strong>
+                                <span>Vay vốn, đầu tư, BĐS, cổ phần, tư vấn pháp lý được tách riêng.</span>
+                            </div>
+                        </div>
+
+                        <div class="sales-point">
+                            <div class="sales-point-icon">3</div>
+                            <div>
+                                <strong>Tăng niềm tin</strong>
+                                <span>Có công ty, bộ máy, tư vấn viên, quy trình, đối tác và công nghệ pháp lý.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a class="btn btn-primary" href="#contact">Tôi muốn được tư vấn</a>
+                </div>
+
+                <form class="sales-mini-form reveal-right" id="quickLeadForm">
+                    <h3>Để lại thông tin nhanh</h3>
+                    <p>Sales có thể gọi lại ngay sau khi khách gửi form.</p>
+
+                    <input type="text" name="quickName" placeholder="Họ và tên*" required />
+                    <input type="tel" name="quickPhone" placeholder="Số điện thoại*" required />
+
+                    <select name="quickNeed" required>
+                        <option value="">Nhu cầu chính*</option>
+                        <option>Vay vốn</option>
+                        <option>Đầu tư</option>
+                        <option>Bất động sản</option>
+                        <option>Cổ phần doanh nghiệp</option>
+                        <option>Tư vấn tài chính</option>
+                        <option>Hợp đồng điện tử / Chữ ký số</option>
+                    </select>
+
+                    <button class="btn btn-primary" type="submit" style="width:100%;">Nhận tư vấn trong 24h</button>
+                </form>
+            </div>
+        </section>
+
+        <section class="section" id="projects">
+            <div class="container">
+                <div class="section-title reveal">
+                    <div class="eyebrow">Dự án / cơ hội nổi bật</div>
+                    <h2>Hiển thị các nhóm cơ hội để khách hàng dễ chọn nhu cầu</h2>
+                    <p>
+                        Phần này giúp Landing Page không bị chung chung, khách vào có thể chọn ngay
+                        nhóm quan tâm: vay, đầu tư, BĐS hoặc cổ phần.
+                    </p>
+                </div>
+
+                <div class="project-grid stagger">
+                    <article class="project-card">
+                        <div class="project-img">
+                            <span class="project-tag">Vay vốn</span>
+                        </div>
+                        <div class="project-body">
+                            <h3>Vay vốn kinh doanh</h3>
+                            <p>Phù hợp hộ kinh doanh, SME, cửa hàng cần vốn lưu động.</p>
+                            <div class="project-meta">
+                                <span>Hạn mức: 100 triệu - 5 tỷ</span>
+                                <span>Hỗ trợ: Tư vấn hồ sơ</span>
+                            </div>
+                            <a class="mini-btn" href="#contact">Xem chi tiết</a>
+                        </div>
+                    </article>
+
+                    <article class="project-card">
+                        <div class="project-img">
+                            <span class="project-tag">BĐS</span>
+                        </div>
+                        <div class="project-body">
+                            <h3>Dự án bất động sản</h3>
+                            <p>Hỗ trợ đầu tư, góp vốn và quản lý hồ sơ pháp lý dự án.</p>
+                            <div class="project-meta">
+                                <span>Khu vực: TP.HCM, Hà Nội</span>
+                                <span>Loại hình: Căn hộ, đất nền</span>
+                            </div>
+                            <a class="mini-btn" href="#contact">Xem chi tiết</a>
+                        </div>
+                    </article>
+
+                    <article class="project-card">
+                        <div class="project-img">
+                            <span class="project-tag">Đầu tư</span>
+                        </div>
+                        <div class="project-body">
+                            <h3>Đầu tư tiêu dùng</h3>
+                            <p>Cơ hội đầu tư vào các khoản vay đã được tư vấn và sàng lọc.</p>
+                            <div class="project-meta">
+                                <span>Lợi nhuận: theo hồ sơ</span>
+                                <span>Rủi ro: được cảnh báo</span>
+                            </div>
+                            <a class="mini-btn" href="#contact">Xem chi tiết</a>
+                        </div>
+                    </article>
+
+                    <article class="project-card">
+                        <div class="project-img">
+                            <span class="project-tag">Cổ phần</span>
+                        </div>
+                        <div class="project-body">
+                            <h3>Startup gọi vốn</h3>
+                            <p>Kết nối doanh nghiệp cần vốn với nhà đầu tư quan tâm.</p>
+                            <div class="project-meta">
+                                <span>Hình thức: góp vốn cổ phần</span>
+                                <span>Hồ sơ: hợp đồng điện tử</span>
+                            </div>
+                            <a class="mini-btn" href="#contact">Xem chi tiết</a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="section section-soft">
+            <div class="container">
+                <div class="section-title reveal">
+                    <div class="eyebrow">Quy trình</div>
+                    <h2>Quy trình số hóa từ tư vấn đến ký kết</h2>
+                    <p>
+                        Thiết kế quy trình đơn giản để khách hàng hiểu ngay cách NASA Payment vận hành.
+                    </p>
+                </div>
+
+                <div class="process-grid stagger">
+                    <div class="step">
+                        <div class="step-num">1</div>
+                        <h3>Đăng ký</h3>
+                        <p>Khách để lại thông tin tư vấn</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-num">2</div>
+                        <h3>Tư vấn</h3>
+                        <p>Chọn nhu cầu phù hợp</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-num">3</div>
+                        <h3>Thẩm định</h3>
+                        <p>Kiểm tra hồ sơ và rủi ro</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-num">4</div>
+                        <h3>Tạo hợp đồng</h3>
+                        <p>Khởi tạo hợp đồng điện tử</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-num">5</div>
+                        <h3>Ký số</h3>
+                        <p>Xác thực và ký online</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-num">6</div>
+                        <h3>Theo dõi</h3>
+                        <p>Quản lý tiến độ minh bạch</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <div class="section-title reveal">
+                    <div class="eyebrow">Đối tác & khách hàng</div>
+                    <h2>Tạo lớp tin cậy cho Landing Page</h2>
+                    <p>
+                        Có thể thay các logo mẫu bằng logo đối tác thật khi triển khai chính thức.
+                    </p>
+                </div>
+
+                <div class="partner-row stagger">
+                    <div class="partner">Vietcom<span>bank</span></div>
+                    <div class="partner">BIDV<span>+</span></div>
+                    <div class="partner">Techcom<span>bank</span></div>
+                    <div class="partner">FPT<span>.</span></div>
+                    <div class="partner">MISA<span>.</span></div>
+                    <div class="partner">VN<span>PAY</span></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section contact" id="contact">
+            <div class="container contact-grid reveal">
+                <div>
+                    <h2>NASA PAYMENT</h2>
+                    <p>Kết nối giá trị – Kiến tạo tương lai.</p>
+
+                    <div class="contact-info">
+                        <p>☎ Hotline: 1900 1234</p>
+                        <p>✉ Email: info@nasapay.vn</p>
+                        <p>📍 Địa chỉ: Tầng 5, 123 Nguyễn Huệ, Quận 1, TP.HCM</p>
+                        <p>⏰ Thời gian: Thứ 2 - Thứ 7, 8:00 - 17:30</p>
+                    </div>
+                </div>
+
+                <form class="lead-form" id="leadForm">
+                    <h2>Nhận tư vấn miễn phí</h2>
+                    <p>Chúng tôi sẽ liên hệ và tư vấn giải pháp phù hợp nhất cho bạn.</p>
+
+                    <div class="form-row">
+                        <input type="text" name="name" placeholder="Họ và tên*" required />
+                        <input type="tel" name="phone" placeholder="Số điện thoại*" required />
+                    </div>
+
+                    <input type="email" name="email" placeholder="Email" />
+
+                    <select name="service" required>
+                        <option value="">Tôi quan tâm đến dịch vụ*</option>
+                        <option>Vay vốn</option>
+                        <option>Đầu tư</option>
+                        <option>Bất động sản</option>
+                        <option>Cổ phần doanh nghiệp</option>
+                        <option>Tư vấn tài chính</option>
+                        <option>Hợp đồng điện tử / Chữ ký số</option>
+                    </select>
+
+                    <textarea name="message" placeholder="Nhu cầu cụ thể của bạn"></textarea>
+
+                    <button class="btn btn-primary" type="submit">Gửi yêu cầu tư vấn</button>
+                </form>
+
+                <div>
+                    <h3>Tại sao chọn NASA Payment?</h3>
+                    <ul class="why-list">
+                        <li>✓ Hệ sinh thái tài chính toàn diện</li>
+                        <li>✓ Công nghệ hiện đại, bảo mật cao</li>
+                        <li>✓ Hợp đồng điện tử và chữ ký số hợp pháp</li>
+                        <li>✓ Đội ngũ tư vấn viên giàu kinh nghiệm</li>
+                        <li>✓ Hỗ trợ nhanh qua Hotline, Zalo, Messenger</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+
+    <div class="sticky-mobile-cta">
+        <a class="btn call-btn" href="tel:19001234">Gọi ngay</a>
+        <a class="btn btn-primary" href="#contact">Nhận tư vấn</a>
+    </div>
+
+    <footer class="footer">
+        <div class="container footer-inner">
+            <div>© 2026 NASA Payment. All rights reserved.</div>
+            <div>
+                <a href="#">Chính sách bảo mật</a>
+                <a href="#">Điều khoản sử dụng</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const themeToggle = document.getElementById('themeToggle');
+        const mobileToggle = document.getElementById('mobileToggle');
+        const menu = document.getElementById('menu');
+        const leadForm = document.getElementById('leadForm');
+        const quickLeadForm = document.getElementById('quickLeadForm');
+        const device = document.querySelector('.device');
+
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('orange-theme');
+        });
+
+        mobileToggle.addEventListener('click', () => {
+            menu.classList.toggle('active');
+        });
+
+        document.querySelectorAll('.menu a').forEach((link) => {
+            link.addEventListener('click', () => {
+                menu.classList.remove('active');
+            });
+        });
+
+        document.querySelectorAll('.stagger').forEach((group) => {
+            Array.from(group.children).forEach((item, index) => {
+                item.style.setProperty('--i', index);
+            });
+        });
+
+        const revealItems = document.querySelectorAll(
+            '.reveal, .reveal-left, .reveal-right, .zoom-reveal, .stagger'
+        );
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.14,
+            rootMargin: '0px 0px -70px 0px'
+        });
+
+        revealItems.forEach((item) => observer.observe(item));
+
+        window.addEventListener('scroll', () => {
+            if (!device) return;
+
+            const scrolled = window.scrollY;
+            const offset = Math.min(scrolled * 0.035, 18);
+            device.style.transform = `rotate(-1deg) translateY(${offset}px)`;
+        }, { passive: true });
+
+
+        if (quickLeadForm) {
+            quickLeadForm.addEventListener('submit', (event) => {
+                event.preventDefault();
+
+                const formData = new FormData(quickLeadForm);
+                const data = Object.fromEntries(formData.entries());
+
+                alert(
+                    'Đã ghi nhận thông tin tư vấn nhanh!\\n\\n' +
+                    'Họ tên: ' + data.quickName + '\\n' +
+                    'SĐT: ' + data.quickPhone + '\\n' +
+                    'Nhu cầu: ' + data.quickNeed
+                );
+
+                quickLeadForm.reset();
+            });
+        }
+
+        leadForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+
+            const formData = new FormData(leadForm);
+            const data = Object.fromEntries(formData.entries());
+
+            alert(
+                'Đã ghi nhận thông tin tư vấn!\\n\\n' +
+                'Họ tên: ' + data.name + '\\n' +
+                'SĐT: ' + data.phone + '\\n' +
+                'Dịch vụ: ' + data.service
+            );
+
+            leadForm.reset();
+        });
+    </script>
+</body>
+
+</html>
