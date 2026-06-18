@@ -16,8 +16,6 @@
 html {
     scroll-behavior: smooth;
     scroll-padding-top: 0;
-    overflow-x: hidden;
-    overflow-x: clip;
     max-width: 100%;
 }
 
@@ -40,8 +38,6 @@ section[id]:not(#home-section) {
 
 body {
     font-family: 'Inter', sans-serif;
-    overflow-x: hidden;
-    overflow-x: clip;
     max-width: 100%;
     overflow-wrap: break-word;
     background: #fff;
@@ -516,7 +512,7 @@ body.site-nav-drawer-open {
 }
 
 /* Hub: hover đã định nghĩa riêng ở trên (.eco-hub-canvas .node:hover) */
-.eco-hub-canvas .node > .reveal {
+.eco-hub-canvas .node>.reveal {
     display: flex;
     width: 100%;
     flex-direction: column;
@@ -527,7 +523,7 @@ body.site-nav-drawer-open {
     transition: opacity 0.55s ease, transform 0.55s ease;
 }
 
-.eco-hub-canvas .node > .reveal.active {
+.eco-hub-canvas .node>.reveal.active {
     opacity: 1;
     transform: none;
 }
@@ -852,54 +848,54 @@ body.site-nav-drawer-open {
 }
 
 /* Trôi nổi trên .tech-card__inner — khung .tech-card giữ lưới thẳng hàng, không “kẹt” lệch theo keyframe */
-.tech-card.reveal.active > .tech-card__inner {
+.tech-card.reveal.active>.tech-card__inner {
     animation: tech-card-cloud 15s cubic-bezier(0.42, 0, 0.58, 1) infinite;
     transform-origin: 50% 85%;
 }
 
-#technology .tech-grid > .tech-card.reveal.active:nth-child(even) > .tech-card__inner {
+#technology .tech-grid>.tech-card.reveal.active:nth-child(even)>.tech-card__inner {
     animation-name: tech-card-cloud-alt;
     animation-duration: 17.5s;
 }
 
-#technology .tech-grid > .tech-card.reveal.active:nth-child(1) > .tech-card__inner {
+#technology .tech-grid>.tech-card.reveal.active:nth-child(1)>.tech-card__inner {
     animation-delay: 0s;
 }
 
-#technology .tech-grid > .tech-card.reveal.active:nth-child(2) > .tech-card__inner {
+#technology .tech-grid>.tech-card.reveal.active:nth-child(2)>.tech-card__inner {
     animation-delay: -2.2s;
 }
 
-#technology .tech-grid > .tech-card.reveal.active:nth-child(3) > .tech-card__inner {
+#technology .tech-grid>.tech-card.reveal.active:nth-child(3)>.tech-card__inner {
     animation-delay: -4.5s;
 }
 
-#technology .tech-grid > .tech-card.reveal.active:nth-child(4) > .tech-card__inner {
+#technology .tech-grid>.tech-card.reveal.active:nth-child(4)>.tech-card__inner {
     animation-delay: -6.8s;
 }
 
-#technology .tech-grid > .tech-card.reveal.active:nth-child(5) > .tech-card__inner {
+#technology .tech-grid>.tech-card.reveal.active:nth-child(5)>.tech-card__inner {
     animation-delay: -1.1s;
 }
 
-#technology .tech-grid > .tech-card.reveal.active:nth-child(6) > .tech-card__inner {
+#technology .tech-grid>.tech-card.reveal.active:nth-child(6)>.tech-card__inner {
     animation-delay: -3.4s;
 }
 
-#technology .tech-grid > .tech-card.reveal.active:nth-child(7) > .tech-card__inner {
+#technology .tech-grid>.tech-card.reveal.active:nth-child(7)>.tech-card__inner {
     animation-delay: -5.7s;
 }
 
-#technology .tech-grid > .tech-card.reveal.active:nth-child(8) > .tech-card__inner {
+#technology .tech-grid>.tech-card.reveal.active:nth-child(8)>.tech-card__inner {
     animation-delay: -8s;
 }
 
-.tech-card.reveal.active:hover > .tech-card__inner {
+.tech-card.reveal.active:hover>.tech-card__inner {
     animation-play-state: paused;
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .tech-card.reveal.active > .tech-card__inner {
+    .tech-card.reveal.active>.tech-card__inner {
         animation: none;
     }
 }
@@ -1212,7 +1208,7 @@ body.site-nav-drawer-open {
 .team-avatar-row {
     display: flex;
     flex-wrap: wrap;
-    align-items: flex-end;
+    align-items: flex-start;
     justify-content: center;
     gap: 1rem 1.35rem;
 }
@@ -1295,17 +1291,17 @@ body.site-nav-drawer-open {
     letter-spacing: 0.02em;
 }
 
-.team-avatar.reveal.active > .team-avatar__motion {
+.team-avatar.reveal.active>.team-avatar__motion {
     animation: team-avatar-drift 12s ease-in-out infinite;
     transform-origin: 50% 80%;
 }
 
-.team-avatar--ceo.reveal.active > .team-avatar__motion {
+.team-avatar--ceo.reveal.active>.team-avatar__motion {
     animation-duration: 14s;
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .team-avatar.reveal.active > .team-avatar__motion {
+    .team-avatar.reveal.active>.team-avatar__motion {
         animation: none;
     }
 }
