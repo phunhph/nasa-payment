@@ -1,4 +1,4 @@
-/* NasaPay landing v2 — self-contained (dùng với Tailwind CDN + Inter) */
+/* Nasapayment landing v2 — self-contained (dùng với Tailwind CDN + Inter) */
 
 :root {
     --primary: #0B2E59;
@@ -74,10 +74,41 @@ img {
     margin-left: auto;
     margin-right: auto;
     width: 100%;
-    padding-left: max(1rem, env(safe-area-inset-left));
-    padding-right: max(1rem, env(safe-area-inset-right));
+    padding-left: max(1.5rem, env(safe-area-inset-left));
+    padding-right: max(1.5rem, env(safe-area-inset-right));
     min-width: 0;
     overflow-x: clip;
+}
+
+@media (min-width: 640px) {
+    .container-custom {
+        padding-left: max(2rem, env(safe-area-inset-left));
+        padding-right: max(2rem, env(safe-area-inset-right));
+    }
+}
+
+@media (min-width: 1024px) {
+    .container-custom {
+        max-width: 1240px;
+        padding-left: max(1.5rem, env(safe-area-inset-left));
+        padding-right: max(1.5rem, env(safe-area-inset-right));
+    }
+}
+
+@media (min-width: 1280px) {
+    .container-custom {
+        max-width: 1280px;
+        padding-left: max(1.75rem, env(safe-area-inset-left));
+        padding-right: max(1.75rem, env(safe-area-inset-right));
+    }
+}
+
+@media (min-width: 1536px) {
+    .container-custom {
+        max-width: 1320px;
+        padding-left: max(2rem, env(safe-area-inset-left));
+        padding-right: max(2rem, env(safe-area-inset-right));
+    }
 }
 
 /* Khi Tailwind đã gán px-* trên cùng node, min-width 0 tránh tràn flex/grid */
@@ -237,6 +268,30 @@ body.site-nav-drawer-open {
 .site-nav .nav-link:focus-visible {
     background: #f1f5f9;
     color: #0f172a;
+}
+
+/* Menu desktop: 1 hàng, chữ đọc được, thẳng hàng với container */
+@media (min-width: 1280px) {
+    .site-nav {
+        flex-wrap: nowrap;
+        font-size: 0.8125rem;
+        column-gap: 0.125rem;
+    }
+
+    .site-nav .nav-link {
+        padding: 0.35rem 0.4rem;
+    }
+}
+
+@media (min-width: 1536px) {
+    .site-nav {
+        font-size: 0.875rem;
+        column-gap: 0.25rem;
+    }
+
+    .site-nav .nav-link {
+        padding: 0.375rem 0.5rem;
+    }
 }
 
 /* —— Reveal on scroll (lớp .reveal) —— */
